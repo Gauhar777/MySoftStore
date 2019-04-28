@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MySoftShop</string>
+    <string name="show_details">Show details</string>
+    <string name="just_text">Бұл текст</string>
+    <string name="just_button">Бұл батырма</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="this_is_description">This is description</string>
+    <string name="title">Title</string>
+    <string name="v">V</string>
+    <string name="buy">buy</string>
+    <string name="Open">NavBar</string>
+    <string name="Close">NavBar</string>
+    <string name="myAccount">Менің аккауынтым</string>
+    <string name="Settings">Параметрлері</string>
+    <string name="favorite">Сүйікті өнім</string>
+    <string name="aboutUs">Біз туралы</string>
+    <string name="support">Көмек</string>
+    <string name="title_activity_product_img">ProductImgActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="sign_in">Кіру</string>
+    <string name="sign_up">Жаңадан кіру</string>
+    <string name="s_w_g">Google-мен жалғастыр</string>
+    <string name="already_a_member_login">Already a member? Login</string>
+    <string name="sort_by_price">Sort by price</string>
+    <string name="Category">Category</string>
+</resources>
