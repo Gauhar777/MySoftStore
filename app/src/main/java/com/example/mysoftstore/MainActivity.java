@@ -19,15 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        timer= new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        },5000);
+
     }
 
 }

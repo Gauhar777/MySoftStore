@@ -31,7 +31,7 @@ public class ProductListFragment  extends ListFragment {
     private SQLiteDatabase mDb;
     public long categoryId;
     private EditText filterText;
-    private SimpleAdapter adapter;
+    public SimpleAdapter adapter;
     private static final String tag="My log";
 
     public static interface Listener{
@@ -72,27 +72,7 @@ public class ProductListFragment  extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        setupDBHelper();
-//        Long cid=categoryId+1;
-//        Log.d("myTag","*********  "+categoryId+"  **************");
-//        Cursor cursorOnProduct=mDb.rawQuery("SELECT * FROM product WHERE category_id"+"="+cid,null);
-//        cursorOnProduct.moveToFirst();
-//        while (!cursorOnProduct.isAfterLast()) {
-//            String name=cursorOnProduct.getString(1);
-//            int image=R.drawable.canon;
-//            HashMap<String,String> phm=new HashMap<String, String>();
-//            phm.put("pName",name);
-//            phm.put("pImg", Integer.toString(image));
-//            productList.add(phm);
-////            newList.add(cursorOnProduct.getString(1));
-//            cursorOnProduct.moveToNext();
-//        }
-//        cursorOnProduct.close();
-//        String[] from={"pName","pImg"};
-//        int[] to={R.id.product_name,R.id.product_image};
-////        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, newList);
-//        adapter=new SimpleAdapter(getContext(),productList,R.layout.fragment_blank,from,to);
-//        setListAdapter(adapter);
+
         return super.onCreateView(inflater,container,savedInstanceState);
 
     }
@@ -102,27 +82,6 @@ public class ProductListFragment  extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-//        setupDBHelper();
-//        Long cid=categoryId+1;
-//        Cursor cursorOnProduct=mDb.rawQuery("SELECT * FROM product WHERE category_id"+"="+cid,null);
-//        cursorOnProduct.moveToFirst();
-//        while (!cursorOnProduct.isAfterLast()) {
-//            String name=cursorOnProduct.getString(1);
-//            int image=R.drawable.canon;
-//            HashMap<String,String> phm=new HashMap<String, String>();
-//            phm.put("pName",name);
-//            phm.put("pImg", Integer.toString(image));
-//            productList.add(phm);
-////            newList.add(cursorOnProduct.getString(1));
-//            cursorOnProduct.moveToNext();
-//        }
-//        cursorOnProduct.close();
-//    String[] from={"pName","pImg"};
-//    int[] to={R.id.product_name,R.id.product_image};
-////        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, newList);
-//        SimpleAdapter adapter=new SimpleAdapter(getContext(),productList,R.layout.fragment_blank,from,to);
-//        setListAdapter(adapter);
-
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

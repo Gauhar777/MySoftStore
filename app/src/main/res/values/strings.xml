@@ -23,4 +23,8 @@
     <string name="already_a_member_login">Already a member? Login</string>
     <string name="sort_by_price">Sort by price</string>
     <string name="Category">Category</string>
+    <string name="quanti_buy_product">Мөлшері</string>
+    <string name="color">Түсі</string>
+    <string name="white">Ақ</string>
+    <string name="set_to_cart">Арбаға салу</string>
 </resources>

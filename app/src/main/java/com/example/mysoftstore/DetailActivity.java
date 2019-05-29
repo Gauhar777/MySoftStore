@@ -10,30 +10,33 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private ArrayList <CarouselItem> imageModelArrayList;
+    private CarouselAdapter adapter;
+
+    private int[] myImageList = new int[]{R.drawable.c1, R.drawable.c2,R.drawable.c3, R.drawable.c2,R.drawable.c1,R.drawable.c3};
+    private String[] myImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
+
     CarouselView carouselView;
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
     TextView textView;
     private DBHelper mDBHelper;
     private SQLiteDatabase mDb;
-//    int[] images={R.drawable.c011,R.drawable.c021,R.drawable.c031};
     public static final String EXTRA_PRODUCT_ID = "id";
     public static final String tag="myLogs";
     @Override
@@ -88,21 +91,40 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+
+        imageModelArrayList = items();
+        adapter = new CarouselAdapter(this, imageModelArrayList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
     }
 
-//    ImageListener carouselListener=new ImageListener() {
-//        @Override
-//        public void setImageForPosition(int position, ImageView imageView) {
-//            imageView.setImageResource(images[position]);
-//            imageView.setRotation(-90f);
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        }
-//    };
+
+    private ArrayList<CarouselItem> items(){
+        ArrayList<CarouselItem> list=new ArrayList<>();
+        for (int i=0;i<6;i++ ){
+            CarouselItem item=new CarouselItem();
+            item.setItemImage(myImageList[i]);
+            item.setItemName(myImageNameList[i]);
+            list.add(item);
+        }
+        return list;
+    }
+
 
     //**************************************Buy product***********************************************
     public void onBuyProduct(View view){
+        int product_id=(int)getIntent().getExtras().get(EXTRA_PRODUCT_ID);
         Intent intent=new Intent(this,BuyActivity.class);
+        intent.putExtra(BuyActivity.PRODUCT_ID_TOBUY,product_id);
         startActivity(intent);
+
+//        setupDBHelper();
+//        Cursor cursorOnProductDetail=mDb.rawQuery("SELECT * FROM product WHERE _id="+product_id,null);
+//        cursorOnProductDetail.moveToFirst();
+//        String price=cursorOnProductDetail.getString(3);
     }
 
     private void setupDBHelper(){

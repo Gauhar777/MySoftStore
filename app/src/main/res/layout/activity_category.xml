@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CategoryActivity">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -33,7 +34,10 @@
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.Toolbar>
-
+        <EditText
+            android:id="@+id/filterText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <fragment
             android:id="@+id/categoryFragment"

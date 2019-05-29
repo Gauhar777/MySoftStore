@@ -8,12 +8,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class CategoryActivity extends AppCompatActivity implements CategoryListFragment.Listener{
 
@@ -79,6 +85,27 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
                 mAuth.signOut();
             }
         });
+
+        EditText filterEditText = (EditText) findViewById(R.id.filterText);
+        filterEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                CategoryImgFragment cfrag=(CategoryImgFragment)getSupportFragmentManager().findFragmentById(R.id.categoryFragment);
+                cfrag.getCategoryAdapter().getFilter().filter(s);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 
 

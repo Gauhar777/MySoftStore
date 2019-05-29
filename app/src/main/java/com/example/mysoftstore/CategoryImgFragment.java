@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class CategoryImgFragment extends ListFragment {
 
+    public SimpleAdapter categoryAdapter ;
     private DBHelper mDBHelper;
     private SQLiteDatabase mDb;
     public static interface Listener {
@@ -51,7 +52,7 @@ public class CategoryImgFragment extends ListFragment {
         cursor.close();
         String[] from={"cname","cimg"};
         int[] to={R.id.category_name,R.id.category_image};
-        SimpleAdapter categoryAdapter = new SimpleAdapter(getContext(), categoryList, R.layout.fragment_category_img,from,to);
+         categoryAdapter = new SimpleAdapter(getContext(), categoryList, R.layout.fragment_category_img,from,to);
         setListAdapter(categoryAdapter);
         return super.onCreateView(inflater,container,savedInstanceState);
     }
@@ -90,4 +91,7 @@ public class CategoryImgFragment extends ListFragment {
         }
     }
 
+    public SimpleAdapter getCategoryAdapter() {
+        return categoryAdapter;
+    }
 }

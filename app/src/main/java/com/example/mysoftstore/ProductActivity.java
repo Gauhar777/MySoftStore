@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import java.io.IOException;
 
@@ -35,6 +38,24 @@ public class ProductActivity extends AppCompatActivity implements ProductListFra
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        EditText filterText=(EditText)findViewById(R.id.filterText);
+        filterText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                ProductListFragment pfrag=(ProductListFragment)getSupportFragmentManager().findFragmentById(R.id.def);
+                pfrag.getAdapter().getFilter().filter(s);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void  setupProductListFragment(){

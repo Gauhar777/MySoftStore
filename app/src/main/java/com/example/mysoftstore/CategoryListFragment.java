@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class CategoryListFragment extends ListFragment {
             categoryList.add(cursor.getString(1));
             cursor.moveToNext();
         }
+
         ArrayAdapter<String> simpleAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,categoryList);
         setListAdapter(simpleAdapter);
 

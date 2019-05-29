@@ -26,6 +26,10 @@
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.Toolbar>
+    <EditText
+        android:id="@+id/filterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.example.mysoftstore.ProductListFragment"
         android:layout_width="match_parent"
