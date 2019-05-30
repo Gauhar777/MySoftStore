@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "198645239560",
+    "firebase_url": "https://softstore-b629f.firebaseio.com",
+    "project_id": "softstore-b629f",
+    "storage_bucket": "softstore-b629f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198645239560:android:b336026d308f36bb",
+        "android_client_info": {
+          "package_name": "com.example.mysoftstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198645239560-bk41n1n38b2upgdm1qap1cn7vpj6vm01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0jR4Ef9g8JZ8yHQG6NjNMDO_BQsA2SMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198645239560-bk41n1n38b2upgdm1qap1cn7vpj6vm01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

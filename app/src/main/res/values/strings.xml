@@ -27,4 +27,6 @@
     <string name="color">Түсі</string>
     <string name="white">Ақ</string>
     <string name="set_to_cart">Арбаға салу</string>
+    <string name="im_user">Сыатыпалушысыз ба?</string>
+    <string name="im_admin">Администраторсыз ба?</string>
 </resources>

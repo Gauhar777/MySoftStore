@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,10 +30,13 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListner;
     private Toolbar toolbar;
+    private TextView textView;
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListner);
+        textView=(TextView)findViewById(R.id.ttt);
+       // textView.setText(mAuth.getCurrentUser().getEmail());
     }
 
     @Override
@@ -102,6 +106,14 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        Button signOut=(Button)findViewById(R.id.sign_out);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
             }
         });
 

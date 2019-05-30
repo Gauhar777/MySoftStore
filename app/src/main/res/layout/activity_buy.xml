@@ -33,17 +33,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/quanti_buy_product" />
 
             <EditText
+                android:id="@+id/quanti"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_sort"
+            android:id="@+id/btnBuy_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -52,7 +54,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="32dp"
             android:text="@string/set_to_cart"
-            android:onClick="onSetCart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
