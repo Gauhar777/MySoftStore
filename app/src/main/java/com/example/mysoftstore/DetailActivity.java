@@ -83,6 +83,10 @@ public class DetailActivity extends AppCompatActivity {
         textView=(TextView)findViewById(R.id.product_price);
         textView.setText(price+" KZT");
 
+
+
+
+
         String productName=cursorOnProductDetail.getString(1);
         Toolbar toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
         toolbar.setTitle(productName);
@@ -98,6 +102,8 @@ public class DetailActivity extends AppCompatActivity {
         adapter = new CarouselAdapter(this, imageModelArrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
 
     }
 

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,10 +51,8 @@ public class CategoryListFragment extends ListFragment {
             categoryList.add(cursor.getString(1));
             cursor.moveToNext();
         }
-
         ArrayAdapter<String> simpleAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,categoryList);
         setListAdapter(simpleAdapter);
-
     }
 
     private void setupDBHelper(){
@@ -70,6 +70,7 @@ public class CategoryListFragment extends ListFragment {
             throw mSQLException;
         }
     }
+
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
@@ -80,7 +81,19 @@ public class CategoryListFragment extends ListFragment {
     public void onListItemClick(ListView listView, View itemView, int position, long id){
         super.onListItemClick(listView,itemView,position,id);
         if (listener!=null){
-            listener.itemCategoryClicked(id);
+            ListView lv = listView;
+            String selectedFromList = (lv.getItemAtPosition(position)).toString();
+            //Log.i("IU","-----------------------"+selectedFromList);
+            Toast.makeText(getContext(),selectedFromList,Toast.LENGTH_SHORT).show();
+
+            setupDBHelper();
+
+            Cursor cursor=mDb.rawQuery("SELECT*FROM category WHERE categoryName='"+selectedFromList+"'",null);
+            cursor.moveToFirst();
+            String b=cursor.getString(0);
+            int mid=Integer.parseInt(b);
+            Log.d("Tag",b+"**---****************---****");
+            listener.itemCategoryClicked(mid);
         }
     }
 

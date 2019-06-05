@@ -1,6 +1,7 @@
 package com.example.mysoftstore.Model;
 
 public class Users {
+
     private String mail;
     public Users(){
 

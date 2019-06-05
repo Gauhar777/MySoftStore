@@ -26,7 +26,7 @@ public class ProductActivity extends AppCompatActivity implements ProductListFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         setupProductListFragment();
-        int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID)+1;
+        int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID);
         setupDBHelper();
         Cursor cursor=mDb.rawQuery("SELECT*FROM category WHERE _id="+idC,null);
         cursor.moveToFirst();
@@ -59,7 +59,7 @@ public class ProductActivity extends AppCompatActivity implements ProductListFra
     }
 
     private void  setupProductListFragment(){
-        int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID);
+        int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID)-1;
         ProductListFragment pFrag=(ProductListFragment)getSupportFragmentManager().findFragmentById(R.id.def);
         assert pFrag != null;
         pFrag.setCategoryProduct(idC);

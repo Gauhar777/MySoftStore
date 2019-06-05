@@ -1,6 +1,10 @@
 package com.example.mysoftstore;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.IOException;
 
 
 public class CategoryActivity extends AppCompatActivity implements CategoryListFragment.Listener{
@@ -31,6 +38,8 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
     FirebaseAuth.AuthStateListener mAuthListner;
     private Toolbar toolbar;
     private TextView textView;
+    private DBHelper mDBHelper;
+    private SQLiteDatabase mDb;
     @Override
     protected void onStart() {
         super.onStart();
@@ -45,6 +54,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
         setContentView(R.layout.activity_category);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
@@ -61,12 +71,23 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
                 int id = item.getItemId();
                 switch(id)
                 {
-                    case R.id.account:
-                        Toast.makeText(CategoryActivity.this, "My Account",Toast.LENGTH_SHORT).show();
-                    case R.id.settings:
-                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+
                     case R.id.mycart:
+                        Intent intent=new Intent(CategoryActivity.this,CartActivity.class);
+                        startActivity(intent);
                         Toast.makeText(CategoryActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
+                    case R.id.support:
+                        Intent intent2=new Intent(CategoryActivity.this,QuestionsActivity.class);
+                        startActivity(intent2);
+                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+                    case R.id.aboutUs:
+                        Intent intent3=new Intent(CategoryActivity.this,MainActivity.class);
+                        startActivity(intent3);
+                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+                    case R.id.out:
+                        FirebaseAuth.getInstance().signOut();
+                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+
                     default:
                         return true;
                 }
@@ -78,9 +99,11 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
         mAuthListner=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 if (firebaseAuth.getCurrentUser()==null){
                     startActivity(new Intent(CategoryActivity.this,LogInActivity.class));
                 }
+
             }
         };
         btnOut.setOnClickListener(new View.OnClickListener() {
@@ -120,23 +143,39 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
 
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if(t.onOptionsItemSelected(item))
             return true;
-
         return super.onOptionsItemSelected(item);
     }
 
     public void itemCategoryClicked(long id) {
+        setupDBHelper();
+        Cursor cursor=mDb.rawQuery("SELECT*FROM category WHERE categoryName='phone'",null);
+        cursor.moveToFirst();
+        String b=cursor.getString(0);
+        Log.d("Tag",b+"**---****************---****");
         Intent intent=new Intent(this,ProductActivity.class);
         intent.putExtra(ProductActivity.EXTRA_CATEGORY_ID, (int) id);
         startActivity(intent);
 //        Intent intent=new Intent(this,TestActivity.class);
 //        intent.putExtra(TestActivity.EXTRA_CATEGORY_ID, (int) id);
 //        startActivity(intent);
+    }
+    private void setupDBHelper(){
+        Context context=this;
+        mDBHelper=new DBHelper(context);
+        try {
+            mDBHelper.updateDataBase();
+        }catch (IOException mIOException){
+            throw new Error("UnableToUpdate");
+        }
+
+        try {
+            mDb=mDBHelper.getWritableDatabase();
+        }catch (SQLException mSQLException){
+            throw mSQLException;
+        }
     }
 }

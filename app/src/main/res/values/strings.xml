@@ -29,4 +29,16 @@
     <string name="set_to_cart">Арбаға салу</string>
     <string name="im_user">Сыатыпалушысыз ба?</string>
     <string name="im_admin">Администраторсыз ба?</string>
+    <string name="Canon_D3200">Canon D3200</string>
+    <string name="product_name">Тауардың аты</string>
+    <string name="Растау">Ok</string>
+    <string name="deliver">Жеткізу қанша уақыт алады?</string>
+    <string name="deliver2">Төлем ақы өткізу түрлері</string>
+    <string name="return_buy">Қайтару мүмкіндігі бар ма?</string>
+    <string name="ga">Кепілдік бар ма?</string>
+    <string name="sale">Жаппай сатылымдар қашан?</string>
+    <string name="softstore">SoftStore</string>
+    <string name="ok">Растау</string>
+    <string name="myCart">Мені дорбам</string>
+    <string name="go_out">Шығу</string>
 </resources>

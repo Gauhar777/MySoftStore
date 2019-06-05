@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,9 +50,20 @@ public class BuyActivity extends AppCompatActivity {
                 addToCart();
             }
         });
+
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void addToCart() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid=user.getUid();
+
         String saveCurrentTime,saveCurrentDate;
         Calendar cfdata=Calendar.getInstance();
         SimpleDateFormat currentDate=new SimpleDateFormat("dd MM, yyyy");
@@ -56,32 +72,42 @@ public class BuyActivity extends AppCompatActivity {
         SimpleDateFormat currentTime=new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime=currentTime.format(cfdata.getTime());
 
-        //final DatabaseReference cartListRef= FirebaseDatabase.getInstance().getReference().child("My product list");
+        final DatabaseReference cartListRef= FirebaseDatabase.getInstance().getReference().child("Cart");
         final HashMap<String,Object> cartMap=new HashMap<>();
-        cartMap.put("pId","1");
-        cartMap.put("name","Canon");
-        cartMap.put("price","150000");
+        String pId=getIntent().getExtras().get(PRODUCT_ID_TOBUY ).toString();
+
+        setupDBHelper();
+        Cursor cursorOnProduct=mDb.rawQuery("SELECT * FROM product WHERE _id"+"="+pId,null);
+        cursorOnProduct.moveToFirst();
+        String name=cursorOnProduct.getString(1);
+        String price=cursorOnProduct.getString(3);
+        cartMap.put("pId",pId);
+        cartMap.put("name",name);
+        cartMap.put("price",price);
         cartMap.put("date",saveCurrentDate);
         cartMap.put("time",saveCurrentTime);
         cartMap.put("quanty",1);
+        cursorOnProduct.close();
 
-        /*cartListRef.child("User View").child("Products").child("1").updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+
+
+
+        cartListRef.child(uid).child("products").child(pId).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    cartListRef.child("Admin View").child("Products").child("1").updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                         Toast.makeText(BuyActivity.this,"Buyed",Toast.LENGTH_LONG).show();
+                    Toast.makeText(BuyActivity.this,"Buyed",Toast.LENGTH_LONG).show();
                          Intent intent=new Intent(BuyActivity.this,CategoryActivity.class);
                          startActivity(intent);
-                        }
-                    });
                 }
             }
-        });*/
+        });
 
     }
+
+
+
 
 
     public void BuyProduct(int p, int q,int purch) {

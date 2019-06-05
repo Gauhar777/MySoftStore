@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class CategoryImgFragment extends ListFragment {
     public SimpleAdapter categoryAdapter ;
     private DBHelper mDBHelper;
     private SQLiteDatabase mDb;
+    List<HashMap<String,String>> categoryList = new ArrayList<HashMap<String,String>>();
     public static interface Listener {
         void itemCategoryClicked(long id);
     }
@@ -37,7 +40,7 @@ public class CategoryImgFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setupDBHelper();
-        List<HashMap<String,String>> categoryList = new ArrayList<HashMap<String,String>>();
+
         Cursor cursor=mDb.rawQuery("SELECT*FROM category",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -86,8 +89,17 @@ public class CategoryImgFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View itemView, int position, long id){
         super.onListItemClick(listView,itemView,position,id);
+        //ListView lv = listView;
+        TextView temp=(TextView)itemView.findViewById(R.id.category_name);
+        String nameProd=temp.getText().toString();
+        //String selectedFromList = (lv.getItemAtPosition(position)).toString();
+        Cursor cursor=mDb.rawQuery("SELECT*FROM category WHERE categoryName='"+nameProd+"'",null);
+        cursor.moveToFirst();
+        String b=cursor.getString(0);
+        Toast.makeText(getContext(),b,Toast.LENGTH_SHORT).show();
+        int idP=Integer.parseInt(b);
         if (listener!=null){
-            listener.itemCategoryClicked(id);
+            listener.itemCategoryClicked(idP);
         }
     }
 
