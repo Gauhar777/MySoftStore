@@ -50,7 +50,6 @@ public class DetailFragment extends Fragment {
 
         }
     }
-
     private void setupDBHelper(){
         Context context=getContext();
         mDBHelper=new DBHelper(context);
@@ -66,8 +65,6 @@ public class DetailFragment extends Fragment {
             throw mSQLException;
         }
     }
-
-
     public void setProduct(long id){
         this.productId=id;
     }

@@ -86,7 +86,7 @@ public class BuyActivity extends AppCompatActivity {
         cartMap.put("price",price);
         cartMap.put("date",saveCurrentDate);
         cartMap.put("time",saveCurrentTime);
-        cartMap.put("quanty",1);
+        cartMap.put("quanty","1");
         cursorOnProduct.close();
 
 

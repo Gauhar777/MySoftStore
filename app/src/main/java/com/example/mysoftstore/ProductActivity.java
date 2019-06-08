@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -24,6 +26,9 @@ public class ProductActivity extends AppCompatActivity implements ProductListFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TextView txt=(TextView)findViewById(R.id.category_products);
+
         setContentView(R.layout.activity_product);
         setupProductListFragment();
         int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID);
@@ -67,11 +72,12 @@ public class ProductActivity extends AppCompatActivity implements ProductListFra
 
     public void itemProductClicked(long id) {
         int ident=(int)id+1;
+        int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID)-1;
         Intent intent=new Intent(this,DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_PRODUCT_ID,ident);
+        intent.putExtra(DetailActivity.EXTRA_CATEGORY_ID,idC);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        Log.d("tag","//////////////////////////////"+"HELLO YOU CLICKED"+"///////////////////////////////");
     }
     private void setupDBHelper(){
         Context context=this;
@@ -90,7 +96,7 @@ public class ProductActivity extends AppCompatActivity implements ProductListFra
     }
     public void onSort(View view){
         Intent intent=new Intent(this,SortProductsActivity.class);
-        startActivity(intent);
+//        startActivity(intent);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -23,13 +23,25 @@ import com.synnapps.carouselview.CarouselView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DetailActivity extends AppCompatActivity {
+public class
+DetailActivity extends AppCompatActivity {
+    public static final String EXTRA_CATEGORY_ID = "idC";
     private RecyclerView recyclerView;
     private ArrayList <CarouselItem> imageModelArrayList;
     private CarouselAdapter adapter;
+    private Toolbar toolbar;
 
-    private int[] myImageList = new int[]{R.drawable.c1, R.drawable.c2,R.drawable.c3, R.drawable.c2,R.drawable.c1,R.drawable.c3};
-    private String[] myImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
+    private int[] myImageList = new int[]{R.drawable.computer, R.drawable.c1, R.drawable.c2,R.drawable.c3, R.drawable.c2,R.drawable.c1,R.drawable.c3};
+    private String[] myImageNameList = new String[]{"Apple","Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
+
+    private int[] myCameraImageList = new int[]{R.drawable.canon, R.drawable.camera,R.drawable.c021, R.drawable.c011,R.drawable.c031,R.drawable.c021};
+    private String[] myCameraImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
+
+    private int[] myTvImageList = new int[]{R.drawable.tv1, R.drawable.tv,R.drawable.tv3, R.drawable.tv1,R.drawable.tv,R.drawable.tv3};
+    private String[] myTvImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
+
+    private int[] myPhoneImageList = new int[]{R.drawable.phone, R.drawable.ph2,R.drawable.ph3, R.drawable.ph4,R.drawable.phone,R.drawable.ph3};
+    private String[] myPhoneImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
 
     CarouselView carouselView;
     NestedScrollView bottomSheet;
@@ -45,11 +57,17 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
+        setSupportActionBar(toolbar);
 
         //**************************************fragment of detail by product's id***********************************************
         CharFragment frag=(CharFragment)getSupportFragmentManager().findFragmentById(R.id.char_list);
         int product_id=(int)getIntent().getExtras().get(EXTRA_PRODUCT_ID);
         frag.setProductid(product_id);
+
+        int idC=(int)getIntent().getExtras().get(EXTRA_CATEGORY_ID)-1;
+        GaleryDetailFragment galFrag=(GaleryDetailFragment)getSupportFragmentManager().findFragmentById(R.id.galery_detail);
+        galFrag.setProductId(idC);
 
         bottomSheet=(NestedScrollView)findViewById(R.id.bottom_sheet);
         bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
@@ -63,15 +81,14 @@ public class DetailActivity extends AppCompatActivity {
                 }else if (i==BottomSheetBehavior.STATE_EXPANDED){
                     btn.setRotation(180);
                 }
-
             }
+
+
 
             @Override
             public void onSlide(@NonNull View view, float v) {
 
             }
-
-
         });
         bottomSheetBehavior.setPeekHeight(230);
         //***************************************Bottom sheet**************************************************************************
@@ -83,14 +100,12 @@ public class DetailActivity extends AppCompatActivity {
         textView=(TextView)findViewById(R.id.product_price);
         textView.setText(price+" KZT");
 
-
-
-
-
         String productName=cursorOnProductDetail.getString(1);
-        Toolbar toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
-        toolbar.setTitle(productName);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
+//        toolbar.setTitle(productName);
+        TextView toolbarTitle=(TextView)findViewById(R.id.pr_det);
+        toolbarTitle.setText(productName);
+//        setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -102,18 +117,17 @@ public class DetailActivity extends AppCompatActivity {
         adapter = new CarouselAdapter(this, imageModelArrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-
-
-
     }
 
 
     private ArrayList<CarouselItem> items(){
+        int product_id=(int)getIntent().getExtras().get(EXTRA_PRODUCT_ID);
         ArrayList<CarouselItem> list=new ArrayList<>();
         for (int i=0;i<6;i++ ){
             CarouselItem item=new CarouselItem();
-            item.setItemImage(myImageList[i]);
-            item.setItemName(myImageNameList[i]);
+                item.setItemImage(myImageList [i]);
+                item.setItemName(myImageNameList[i]);
+
             list.add(item);
         }
         return list;
@@ -148,6 +162,7 @@ public class DetailActivity extends AppCompatActivity {
             throw mSQLException;
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -45,10 +45,11 @@ public class CategoryImgFragment extends ListFragment {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             String name=cursor.getString(1);
-            int image=R.drawable.horz;
+            int image=R.drawable.camera;
+            int imgId = getResources().getIdentifier("com.example.mysoftstore:drawable/" + name, null, null);
             HashMap<String, String> hm = new HashMap<String, String>();
             hm.put("cname",name);
-            hm.put("cimg", Integer.toString(image));
+            hm.put("cimg", Integer.toString(imgId));
             categoryList.add(hm);
             cursor.moveToNext();
         }
@@ -58,6 +59,7 @@ public class CategoryImgFragment extends ListFragment {
          categoryAdapter = new SimpleAdapter(getContext(), categoryList, R.layout.fragment_category_img,from,to);
         setListAdapter(categoryAdapter);
         return super.onCreateView(inflater,container,savedInstanceState);
+
     }
 
     private void setupListofCategory(){
@@ -89,6 +91,7 @@ public class CategoryImgFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View itemView, int position, long id){
         super.onListItemClick(listView,itemView,position,id);
+
         //ListView lv = listView;
         TextView temp=(TextView)itemView.findViewById(R.id.category_name);
         String nameProd=temp.getText().toString();
@@ -96,7 +99,7 @@ public class CategoryImgFragment extends ListFragment {
         Cursor cursor=mDb.rawQuery("SELECT*FROM category WHERE categoryName='"+nameProd+"'",null);
         cursor.moveToFirst();
         String b=cursor.getString(0);
-        Toast.makeText(getContext(),b,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),nameProd,Toast.LENGTH_SHORT).show();
         int idP=Integer.parseInt(b);
         if (listener!=null){
             listener.itemCategoryClicked(idP);

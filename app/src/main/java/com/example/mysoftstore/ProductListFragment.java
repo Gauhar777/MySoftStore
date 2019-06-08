@@ -15,7 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,11 +73,8 @@ public class ProductListFragment  extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater,container,savedInstanceState);
-
     }
 
     List<HashMap<String,String>> productList=new ArrayList<HashMap<String,String>>();
@@ -132,4 +132,20 @@ public class ProductListFragment  extends ListFragment {
         }
     }
 
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        TextView txtV=(TextView)v.findViewById(R.id.product_name);
+        String nameP=txtV.getText().toString();
+        Cursor cursor=mDb.rawQuery("SELECT*FROM product WHERE productName='"+nameP+"'",null);
+        cursor.moveToFirst();
+        String b=cursor.getString(0);
+        Toast.makeText(getContext(),nameP,Toast.LENGTH_SHORT).show();
+        int idP=Integer.parseInt(b);
+        //int ident=(int)id+1;
+        if (listener!=null){
+            listener.itemProductClicked(1);
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.example.mysoftstore;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
@@ -14,17 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 
@@ -67,33 +62,37 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
         nv = (NavigationView)findViewById(R.id.nv);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id)
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.support)
                 {
+                    Intent intent2=new Intent(CategoryActivity.this,QuestionsActivity.class);
+                    startActivity(intent2);
+                    Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
 
-                    case R.id.mycart:
-                        Intent intent=new Intent(CategoryActivity.this,CartActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(CategoryActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
-                    case R.id.support:
-                        Intent intent2=new Intent(CategoryActivity.this,QuestionsActivity.class);
-                        startActivity(intent2);
-                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
-                    case R.id.aboutUs:
-                        Intent intent3=new Intent(CategoryActivity.this,MainActivity.class);
-                        startActivity(intent3);
-                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
-                    case R.id.out:
-                        FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
-
-                    default:
-                        return true;
+                } else if (id == R.id.mycart)
+                {
+                    Intent intent=new Intent(CategoryActivity.this,CartActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(CategoryActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
                 }
+                else if (id == R.id.aboutUs)
+                {
+                    Intent intent3=new Intent(CategoryActivity.this,MainActivity.class);
+                    startActivity(intent3);
+                    Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+                }
+                else if (id == R.id.out)
+                {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(CategoryActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+
             }
         });
-
         Button btnOut=(Button)findViewById(R.id.sign_out);
         mAuth = FirebaseAuth.getInstance();
         mAuthListner=new FirebaseAuth.AuthStateListener() {
@@ -139,29 +138,17 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
                 FirebaseAuth.getInstance().signOut();
             }
         });
-
-
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(t.onOptionsItemSelected(item))
             return true;
         return super.onOptionsItemSelected(item);
     }
-
     public void itemCategoryClicked(long id) {
-        setupDBHelper();
-        Cursor cursor=mDb.rawQuery("SELECT*FROM category WHERE categoryName='phone'",null);
-        cursor.moveToFirst();
-        String b=cursor.getString(0);
-        Log.d("Tag",b+"**---****************---****");
         Intent intent=new Intent(this,ProductActivity.class);
         intent.putExtra(ProductActivity.EXTRA_CATEGORY_ID, (int) id);
         startActivity(intent);
-//        Intent intent=new Intent(this,TestActivity.class);
-//        intent.putExtra(TestActivity.EXTRA_CATEGORY_ID, (int) id);
-//        startActivity(intent);
     }
     private void setupDBHelper(){
         Context context=this;
@@ -178,4 +165,5 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListF
             throw mSQLException;
         }
     }
+
 }
