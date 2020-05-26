@@ -55,7 +55,9 @@ public class ProductListFragment  extends ListFragment {
         cursorOnProduct.moveToFirst();
         while (!cursorOnProduct.isAfterLast()) {
             String name=cursorOnProduct.getString(1);
-            int image=R.drawable.canon;
+            String imageName=cursorOnProduct.getString(5);
+            int image = getResources().getIdentifier("com.example.mysoftstore:drawable/" + imageName, null, null);
+            //int image=R.drawable.canon;
             HashMap<String,String> phm=new HashMap<String, String>();
             phm.put("pName",name);
             phm.put("pImg", Integer.toString(image));

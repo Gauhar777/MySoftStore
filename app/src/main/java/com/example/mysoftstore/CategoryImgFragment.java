@@ -45,8 +45,9 @@ public class CategoryImgFragment extends ListFragment {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             String name=cursor.getString(1);
+            String imgName=cursor.getString(2);
             int image=R.drawable.camera;
-            int imgId = getResources().getIdentifier("com.example.mysoftstore:drawable/" + name, null, null);
+            int imgId = getResources().getIdentifier("com.example.mysoftstore:drawable/" + imgName, null, null);
             HashMap<String, String> hm = new HashMap<String, String>();
             hm.put("cname",name);
             hm.put("cimg", Integer.toString(imgId));

@@ -32,7 +32,7 @@ DetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private int[] myImageList = new int[]{R.drawable.computer, R.drawable.c1, R.drawable.c2,R.drawable.c3, R.drawable.c2,R.drawable.c1,R.drawable.c3};
-    private String[] myImageNameList = new String[]{"Apple","Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
+    private String[] myImageNameList = new String[]{"Алма","Бүлдірген","Мандарин" ,"Кұлпынай","Алмүрт","Ананас","Қарақат"};
 
     private int[] myCameraImageList = new int[]{R.drawable.canon, R.drawable.camera,R.drawable.c021, R.drawable.c011,R.drawable.c031,R.drawable.c021};
     private String[] myCameraImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry"};
